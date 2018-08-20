@@ -1,0 +1,19 @@
+{
+    "login": "",
+    "password": "",
+    "tasks": [
+        {
+            "id": 46,
+            "completion": true,
+            "stars": 1
+        },
+        {
+            "id": 46,
+            "completion": true,
+            "stars": 1
+        }
+
+    ],
+    "recharge": false
+
+}
