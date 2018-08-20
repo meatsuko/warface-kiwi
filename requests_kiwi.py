@@ -44,22 +44,13 @@ class RequestsKIWI(object):
         response = self._session.get("https://wf.mail.ru/minigames/bp4/info/tasks", headers = self._headers_request, params = {"chain": chain})
         return self.parser(response.json()['data']['tasks'], callback)
 
-    def getAllTasks(self):
+    def getTasks(self, callback):
         azbuga = []
-        azbuga.append(self.getChainTasks("icebreaker", self.callback_avatartask))
-        azbuga.append(self.getChainTasks("pripyat", self.callback_avatartask))
-        azbuga.append(self.getChainTasks("anubis", self.callback_avatartask))
-        azbuga.append(self.getChainTasks("volcano", self.callback_avatartask))
-        azbuga.append(self.getChainTasks("shark", self.callback_avatartask))
-        return azbuga
-
-    def getActiveTask(self):
-        azbuga = []
-        azbuga.append(self.getChainTasks("icebreaker", self.callback_activetask))
-        azbuga.append(self.getChainTasks("pripyat", self.callback_activetask))
-        azbuga.append(self.getChainTasks("anubis", self.callback_activetask))
-        azbuga.append(self.getChainTasks("volcano", self.callback_activetask))
-        azbuga.append(self.getChainTasks("shark", self.callback_activetask))
+        azbuga.append(self.getChainTasks("icebreaker", callback))
+        azbuga.append(self.getChainTasks("pripyat", callback))
+        azbuga.append(self.getChainTasks("anubis", callback))
+        azbuga.append(self.getChainTasks("volcano", callback))
+        azbuga.append(self.getChainTasks("shark", callback))
         return azbuga
 
 
