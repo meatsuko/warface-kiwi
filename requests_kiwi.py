@@ -15,7 +15,8 @@ class RequestsKIWI(object):
     def __init__(self):
         return
 
-    def Auth(self, login, password):
+
+    def auth(self, login, password):
         payload = {
             'Domain': 'mail.ru',
             'FakeAuthPage': 'https://wf.mail.ru/auth',
@@ -40,17 +41,22 @@ class RequestsKIWI(object):
             response = session.post("https://auth.mail.ru/cgi-bin/auth", data = payload, headers = headers_auth)
             self._session = session
 
+
     def getChainTasks(self, chain, callback):
         response = self._session.get("https://wf.mail.ru/minigames/bp4/info/tasks", headers = self._headers_request, params = {"chain": chain})
         return self.parser(response.json()['data']['tasks'], callback)
 
+
     def getTasks(self, callback):
+        chains = ["icebreaker", "pripyat", "anubis", "volcano", "shark"]
         azbuga = []
-        azbuga.append(self.getChainTasks("icebreaker", callback))
-        azbuga.append(self.getChainTasks("pripyat", callback))
-        azbuga.append(self.getChainTasks("anubis", callback))
-        azbuga.append(self.getChainTasks("volcano", callback))
-        azbuga.append(self.getChainTasks("shark", callback))
+
+        for chain in chains:
+            chainTasks = self.getChainTasks(chain, callback)
+            if chainTasks != None:
+                azbuga.append(chainTasks)
+
+        if len(azbuga) == 0: return None
         return azbuga
 
 
@@ -61,13 +67,17 @@ class RequestsKIWI(object):
                 task_back = callback(task)
                 if task_back != None:
                     azbuga.append(task_back)
+
+        if len(azbuga) == 0: return None
         return azbuga
+
 
     def callback_activetask(self, task):
         if task['type'] == 'avatar':
             if task['status'] == 'progress':
                 return task
-            return None
+        return None
+
 
     def callback_avatartask(self, task):
         if task['type'] == 'avatar':
