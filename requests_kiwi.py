@@ -83,3 +83,31 @@ class RequestsKIWI(object):
         if task['type'] == 'avatar':
             return task
         return None
+
+
+    def taskStart(self, task_id, stars):
+        payload = {
+            'stars': stars,
+            'task_id': task_id,
+            }
+        headers_task = {
+            'accept': "application/json, text/plain, */*",
+            'origin': "https://wf.mail.ru",
+            'user-agent': "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36",
+            'content-type': "application/x-www-form-urlencoded",
+            'referer': "https://wf.mail.ru/kiwi",
+            'accept-encoding': "gzip, deflate, br",
+            'accept-language': "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7"
+            }
+        response = self._session.post("https://wf.mail.ru/minigames/bp4/task/start-task", data = payload, headers = headers_task)
+
+        return response.json()
+
+    def taskDone():
+        payload = {
+            'is_paid': '0',
+            'stars': stars,
+            'task_id': task_id,
+            }
+        response = self._session.post("https://wf.mail.ru/minigames/bp4/task/done-task", data = payload, headers = self._headers_request)
+        return response.json()
